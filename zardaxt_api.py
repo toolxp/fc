@@ -24,10 +24,10 @@ class ZardaxtApiServer(BaseHTTPRequestHandler):
         super().__init__(*args, **kwargs)
 
     def get_ip(self):
-    ip = self.headers.get('X-Forwarded-For') or self.headers.get('X-Real-IP')
-    if ip:
-        return ip.split(',')[0].strip()
-    return self.client_address[0]
+        ip = self.headers.get('X-Forwarded-For') or self.headers.get('X-Real-IP')
+        if ip:
+            return ip.split(',')[0].strip()
+        return self.client_address[0]
 
     def get_user_agent(self):
         return self.headers.get('user-agent')
@@ -39,10 +39,10 @@ class ZardaxtApiServer(BaseHTTPRequestHandler):
             return arg[0].strip()
 
     def end_headers(self):
-    origin = self.headers.get('Origin')
-    if origin in ['https://toolxp.com', 'https://www.toolxp.com', 'https://1.toolxp.com']:
-        self.send_header('Access-Control-Allow-Origin', origin)
-    BaseHTTPRequestHandler.end_headers(self)
+        origin = self.headers.get('Origin')
+        if origin in ['https://toolxp.com', 'https://www.toolxp.com']:
+            self.send_header('Access-Control-Allow-Origin', origin)
+        BaseHTTPRequestHandler.end_headers(self)
 
     def send_json(self, payload):
         self.send_response(200)
